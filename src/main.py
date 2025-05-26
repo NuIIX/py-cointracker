@@ -1,16 +1,8 @@
 import os
-import re
 from src.api import CoinMarketCapAPI
 from src.repository import CryptoRepository
 from src.serializer import export_to_csv, export_to_json, export_to_xml, get_file_size
-
-
-def is_valid_directory(path):
-    return os.path.isdir(path) and os.access(path, os.W_OK)
-
-
-def is_valid_filename(filename):
-    return bool(re.match(r'^[\w\-.]+$', filename))
+from src.validator import is_valid_directory, is_valid_filename
 
 
 def main():

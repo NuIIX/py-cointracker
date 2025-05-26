@@ -3,9 +3,18 @@ import json
 import os
 import xml.etree.ElementTree as ET
 
+
 def export_to_csv(data, file_path):
-    """
-    Экспортирует список объектов криптовалют (data) в CSV файл.
+    """Экспортирует данные о криптовалютах в CSV файл.
+
+    Args:
+        data (list[object]): Список объектов криптовалют для экспорта. Каждый объект должен содержать
+        атрибуты: name, symbol, price, market_cap, circulating_supply.
+        file_path (str): Путь к файлу для сохранения данных. Должен включать расширение .csv.
+
+    Raises:
+        IOError: Если возникла ошибка при записи файла.
+        AttributeError: Если объекты в data не содержат необходимых атрибутов.
     """
     with open(file_path, 'w', newline='', encoding='utf-8') as csvfile:
         writer = csv.writer(csvfile)
@@ -13,9 +22,18 @@ def export_to_csv(data, file_path):
         for crypto in data:
             writer.writerow([crypto.name, crypto.symbol, crypto.price, crypto.market_cap, crypto.circulating_supply])
 
+
 def export_to_json(data, file_path):
-    """
-    Экспортирует список объектов криптовалют (data) в JSON файл.
+    """Экспортирует данные о криптовалютах в JSON файл с форматированием.
+
+    Args:
+        data (list[object]): Список объектов криптовалют для экспорта. Каждый объект должен содержать
+        атрибуты: name, symbol, price, market_cap, circulating_supply.
+        file_path (str): Путь к файлу для сохранения данных. Должен включать расширение .json.
+
+    Raises:
+        IOError: Если возникла ошибка при записи файла.
+        AttributeError: Если объекты в data не содержат необходимых атрибутов.
     """
     export_list = []
     for crypto in data:
@@ -29,9 +47,19 @@ def export_to_json(data, file_path):
     with open(file_path, 'w', encoding='utf-8') as jsonfile:
         json.dump(export_list, jsonfile, ensure_ascii=False, indent=4)
 
+
 def export_to_xml(data, file_path):
-    """
-    Экспортирует список объектов криптовалют (data) в XML файл.
+    """Экспортирует данные о криптовалютах в XML файл с UTF-8 кодировкой.
+
+    Args:
+        data (list[object]): Список объектов криптовалют для экспорта. Каждый объект должен содержать
+        атрибуты: name, symbol, price, market_cap, circulating_supply.
+        file_path (str): Путь к файлу для сохранения данных. Должен включать расширение .xml.
+
+    Raises:
+        IOError: Если возникла ошибка при записи файла.
+        AttributeError: Если объекты в data не содержат необходимых атрибутов.
+        xml.etree.ElementTree.ParseError: Если возникла ошибка при генерации XML.
     """
     root = ET.Element("Cryptocurrencies")
     for crypto in data:
@@ -44,9 +72,16 @@ def export_to_xml(data, file_path):
     tree = ET.ElementTree(root)
     tree.write(file_path, encoding='utf-8', xml_declaration=True)
 
+
 def get_file_size(file_path):
     """
     Возвращает размер файла в удобном формате (Bytes, KB, MB, GB).
+
+    Args:
+        file_path (str): Путь к файлу для определения размера.
+
+    Returns:
+        str: Строка с размером файла в соответствующем формате.
     """
     size = os.path.getsize(file_path)
     if size < 1024:
